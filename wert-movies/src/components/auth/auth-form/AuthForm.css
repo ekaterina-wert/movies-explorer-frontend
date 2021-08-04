@@ -1,4 +1,4 @@
-.login {
+.auth {
   height: 100vh;
   max-width: 396px;
   margin: 0 auto;
@@ -8,12 +8,12 @@
   align-items: flex-start;
 }
 
-.login__logo {
+.auth__logo {
   width: 38px;
   height: 38px;
 }
 
-.login__title {
+.auth__title {
   margin: 40px 0 16px;
   padding: 0;
   font-weight: 500;
@@ -23,14 +23,22 @@
   text-align: left;
 }
 
-.login__form {
+.auth__form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex-grow: 0.5;
 }
 
-.login__label {
+.auth__input-container {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  border: none;
+}
+
+.auth__label {
   display: inline-block;
   margin: 24px 0 0;
   padding: 0;
@@ -40,48 +48,31 @@
   color: #a0a0a0;
 }
 
-.login__input-container {
-  margin: 0;
-  padding: 0;
-  outline: none;
-  box-sizing: border-box;
-  border: none;
-}
-
-.login__text {
+.auth__text {
   font-weight: 500;
   font-size: 14px;
   line-height: 1.21;
-  background-color: rgba(0, 0, 0, 0);
   color: #000;
   border: none;
+  box-sizing: border-box;
   margin: 0;
-  padding: 10px 4px;
+  padding: 10px 2px;
   width: 100%;
   border-bottom: 1px solid #e8e8e8;
 }
 
-.login__link {
-  text-decoration: none;
-  color: #2be080;
-  transition: opacity 0.4s ease;
-}
-
-.login__link:hover {
-  opacity: 0.8;
-}
-
-.login__redirection-text {
-  margin: 0 auto;
-  padding: 0;
+.auth__input-error {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 10px;
   line-height: 1.21;
-  color: #a0a0a0;
-  text-align: center;
+  color: #EE3465;
+  margin: 6px 0 0;
+  display: none;
+  /* display: block; */
+  width: 100%;
 }
 
-.login__submit {
+.auth__submit {
   margin: 16px 0;
   padding: 13px 0 15px;
   outline: none;
@@ -99,28 +90,48 @@
   color: #fff;
 }
 
-.login__submit:hover {
+.auth__submit:hover {
+  opacity: 0.8;
+}
+
+.auth__redirection-text {
+  margin: 0 auto;
+  padding: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  color: #a0a0a0;
+  text-align: center;
+}
+
+.auth__link {
+  text-decoration: none;
+  color: #2be080;
+  transition: opacity 0.4s ease;
+}
+
+.auth__link:hover {
   opacity: 0.8;
 }
 
 @media screen and (max-width: 600px) {
-    .login {
-        max-width: 260px;
-      }
-  
-    .login__logo {
+  .auth {
+    max-width: 260px;
+  }
+
+  .auth__logo {
     align-self: center;
   }
 
-  .login__title {
+  .auth__title {
     align-self: center;
   }
 
-  .login__redirection-text {
+  .auth__redirection-text {
     font-size: 12px;
   }
 
-  .login__submit {
+  .auth__submit {
     margin: 14px 0;
     font-size: 12px;
   }
