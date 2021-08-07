@@ -4,8 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 import Header from './header/Header';
 // import Footer from './footer/Footer.js';
 // import Main from './main/Main.js';
-import Login from './auth/Login.js';
-import Register from './auth/Register.js';
+import Profile from './auth/profile/Profile';
+import Login from './auth/Login';
+import Register from './auth/Register';
 // import Profile from './auth/profile/Profile.js';
 // import Movies from './movies/Movies.js';
 // import SavedMovies from './savedMovies/SavedMovies.js';
@@ -42,25 +43,32 @@ function App() {
           // loggedIn={loggedIn}
           component={Profile}
         /> */}
-        <Route path="/signup">
-          <Register 
+        <Route path="/profile">
+          <Profile
           // onRegister={handleRegister} 
+          name='Ekaterina'
+          email='ru@ru.ru'
           />
-        </Route>
-        <Route path="/signin">
-          <Login 
-          // onLogin={handleLogin} data={newUserData} 
-          />
-        </Route>
-        <Route>
-          {/* {loggedIn ? <Redirect exact to="/" /> : <Redirect to="/signin" />} */}
-        </Route>
+          </Route>
+          <Route path="/signup">
+            <Register
+            // onRegister={handleRegister} 
+            />
+          </Route>
+          <Route path="/signin">
+            <Login
+            // onLogin={handleLogin} data={newUserData} 
+            />
+          </Route>
+          <Route>
+            {/* {loggedIn ? <Redirect exact to="/" /> : <Redirect to="/signin" />} */}
+          </Route>
       </Switch>
-      
-      {/* <Footer /> */}
-      {/* </CurrentUserContext.Provider> */}
+
+        {/* <Footer /> */}
+        {/* </CurrentUserContext.Provider> */}
     </>
-  );
+      );
 }
 
-export default App;
+      export default App;
