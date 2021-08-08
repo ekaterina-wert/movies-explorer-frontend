@@ -6,15 +6,12 @@ import profileIcon from '../../images/profile-icon.svg';
 import Navigation from '../navigation/Navigation';
 
 function Header(props) {
-
-    const [menuToggle, setMenuToggle] = React.useState(false);
+    // Определяем режим выпадающего меню
+    const [menuOpened, setMenuOpened] = React.useState(false);
 
     function handleMenuToggle(e) {
-        setMenuToggle(!menuToggle);
-        console.log(menuToggle)
+        setMenuOpened(!menuOpened);
     }
-
-    const isOpen = menuToggle ? true : false;
 
     return (
         <div className='header'>
@@ -26,7 +23,7 @@ function Header(props) {
                 <span className="header__burger-middle"></span>
             </div>
 
-            {isOpen && <Navigation />}
+            {menuOpened && <Navigation />}
 
             <nav className='header__nav'>
                 <NavLink className='header__text header__nav-link' activeClassName="header__text_active" to='/movies'>Фильмы</NavLink>

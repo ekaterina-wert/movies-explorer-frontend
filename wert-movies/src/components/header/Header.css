@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 0 70px;
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-areas: 'logo menu profile';
   justify-items: stretch;
   align-items: center;
@@ -35,6 +35,7 @@
 
 .header__nav {
   grid-area: menu;
+  justify-self: center;
 }
 
 .header__text {
@@ -96,6 +97,7 @@
     height: 23px;
     grid-area: menu;
     cursor: pointer;
+    transition: opacity 0.4s ease;
   }
 
   .header__burger:before {
@@ -116,6 +118,10 @@
     height: 3px;
     left: 0;
     bottom: 0;
+  }
+
+  .header__burger:hover {
+    opacity: 0.6;
   }
 
   .header__burger-middle {

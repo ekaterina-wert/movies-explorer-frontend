@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Header from './header/Header';
-// import Footer from './footer/Footer.js';
+import Footer from './footer/Footer.js';
 // import Main from './main/Main.js';
 import Profile from './auth/profile/Profile';
 import Login from './auth/Login';
@@ -46,7 +46,7 @@ function App() {
         <Route path="/profile">
           <Profile
           // onRegister={handleRegister} 
-          name='Ekaterina'
+          name='Alex'
           email='ru@ru.ru'
           />
           </Route>
@@ -65,7 +65,7 @@ function App() {
           </Route>
       </Switch>
 
-        {/* <Footer /> */}
+        <Footer />
         {/* </CurrentUserContext.Provider> */}
     </>
       );
