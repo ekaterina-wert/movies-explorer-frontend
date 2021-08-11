@@ -1,0 +1,114 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background-color: #fdfdfd;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  /* cursor: pointer; */
+}
+
+.card__image {
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  max-height: 203px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+  box-sizing: border-box;
+}
+
+.card__title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  /* background: #fdfdfd; */
+}
+
+.card__title {
+  margin: 0;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.21;
+  color: #000;
+  align-self: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__button {
+  padding: 0;
+  margin: 0;
+  min-width: 14px;
+  min-height: 12px;
+  outline: none;
+  box-sizing: border-box;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url('../../../images/save-icon.svg');
+  background-position: center;
+  background-size: 98%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+}
+
+.card__button:hover {
+    opacity: .6;
+}
+
+.card__button_type_like:hover {
+    background-image: url('../../../images/save-icon_hover.svg');
+}
+
+.card__button_type_like {
+    transition: background-image 0.5s ease;
+    background-image: url('../../../images/save-icon.svg');
+  }
+
+
+.card__button_type_active-like {
+  /* opacity: 1; */
+  background-image: url('../../../images/save-icon_active.svg');
+}
+
+.card__button_type_delete {
+    /* opacity: 1; */
+    background-image: url('../../../images/delete-icon.svg');
+  }
+
+.card__duration-text {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.21;
+  color: #a0a0a0;
+  align-self: start;
+  padding: 1px 16px 16px;
+  margin: 0;
+}
+
+@media screen and (max-width: 880px) {
+  .card__title-container {
+    padding: 14px;
+  }
+
+  .card__image {
+    max-height: 190px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+    .card__image {
+      max-height: 168px;
+    }
+  }
