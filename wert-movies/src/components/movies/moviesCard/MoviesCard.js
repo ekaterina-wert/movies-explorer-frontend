@@ -1,6 +1,7 @@
 import React from 'react';
 import './MoviesCard.css';
 import imag from '../../../images/city.jpg';
+import { timeConverter } from '../../../utils/utils';
 // import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 
 function MoviesCard(props) {
@@ -33,7 +34,8 @@ function MoviesCard(props) {
 
     // Передаем id карточки в App через Main
     function handleClick() {
-        props.onCardClick(props);
+        console.log('click!')
+    //    props.onCardClick(props);
     }
 
     // Передаем id карточки в App через Movies
@@ -42,14 +44,18 @@ function MoviesCard(props) {
         props.onCardLike(props);
     }
 
+    function handleDeleteClick() {
+        props.onCardDelete(props);
+    }
+
     return (
         <li className="card">
-            <img className="card__image" src={imag} alt={props.nameRU} onClick={handleClick} />
+            <img className="card__image" src={imag} alt={props.nameRU} onClick={handleClick}/>
             <div className="card__title-container">
-                <h2 className="card__title">{props.nameRU}</h2>
-                <button className={cardButtonClassName} type="button" aria-label="Сохранить" onClick={handleLikeClick} />
+                <h2 className="card__title" onClick={handleClick} >{props.nameRU}</h2>
+                <button className={cardButtonClassName} type="button" aria-label="Сохранить" onClick={ props.isSaved ? handleDeleteClick : handleLikeClick} />
             </div>
-            <p className="card__duration-text">{props.duration}</p>
+            <p className="card__duration-text">{timeConverter(props.duration)}</p>
         </li>
     )
 }

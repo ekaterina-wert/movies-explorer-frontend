@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { useParams, useHistory, Route, Switch } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer.js';
 // import Main from './main/Main.js';
@@ -10,6 +10,7 @@ import Register from './auth/Register';
 // import Profile from './auth/profile/Profile.js';
 import Movies from './movies/Movies.js';
 import SavedMovies from './movies/SavedMovies.js';
+import NotFound from './notFound/NotFound';
 
 function App() {
   const cardArr = [
@@ -90,6 +91,12 @@ function App() {
     "image": { "id": 3, "name": "blur", "alternativeText": "", "caption": "", "width": 460, "height": 298, "formats": { "thumbnail": { "hash": "thumbnail_blur_a43fcf463d", "ext": ".jpeg", "mime": "image/jpeg", "width": 241, "height": 156, "size": 8.32, "path": null, "url": "/uploads/thumbnail_blur_a43fcf463d.jpeg" } }, "hash": "blur_a43fcf463d", "ext": ".jpeg", "mime": "image/jpeg", "size": 21.07, "url": "/uploads/blur_a43fcf463d.jpeg", "previewUrl": null, "provider": "local", "provider_metadata": null, "created_at": "2020-11-23T14:17:01.702Z", "updated_at": "2020-11-23T14:17:01.702Z" }
   }])
 
+  const history = useHistory();
+
+  function handleBack() {
+    history.goBack();
+  }
+
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
     // const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -103,20 +110,17 @@ function App() {
     //       )
     //     )
     //   })
-    setSavedMoviesArr([card, ...savedMoviesArr])
+    setSavedMoviesArr(savedMoviesArr.some(function (el) { return el.id === card.id }) ? [...savedMoviesArr] : [card, ...savedMoviesArr]);
     console.log(savedMoviesArr)
   };
 
   function handleCardDelete(card) {
-    console.log('Delete!')
+    setSavedMoviesArr(savedMoviesArr.filter(function (el) { return el.id !== card.id }));
   }
 
   return (
     <>
       {/* <CurrentUserContext.Provider value={currentUser}> */}
-      <Header
-      // loggedIn={loggedIn} onClick={handleSignOut} email={userEmail} 
-      />
       <Switch>
         {/* <ProtectedRoute */}
         {/* <Route
@@ -130,12 +134,14 @@ function App() {
         // loggedIn={loggedIn}
         // component={Movies}
         >
+          <Header />
           <Movies
             isSaved={false}
             cardArr={cardArr}
             onCardLike={handleCardLike}
             savedMovies={savedMoviesArr}
           />
+          <Footer />
         </Route>
         {/* <ProtectedRoute */}
         <Route
@@ -143,11 +149,13 @@ function App() {
         // loggedIn={loggedIn}
         // component={SavedMovies}
         >
+          <Header />
           <SavedMovies
             isSaved={true}
             savedCardArr={savedMoviesArr}
             onCardDelete={handleCardDelete}
           />
+          <Footer />
         </Route>
         {/* <ProtectedRoute */}
         {/* <Route
@@ -156,6 +164,7 @@ function App() {
           component={Profile}
         /> */}
         <Route path="/profile">
+          <Header />
           <Profile
             // onRegister={handleRegister} 
             name='Alex'
@@ -172,12 +181,20 @@ function App() {
           // onLogin={handleLogin} data={newUserData} 
           />
         </Route>
+        <Route path="/signin">
+          <Login
+          // onLogin={handleLogin} data={newUserData} 
+          />
+        </Route>
+        <Route path="/404">
+          <NotFound
+            onBack={handleBack}
+          />
+        </Route>
         <Route>
           {/* {loggedIn ? <Redirect exact to="/" /> : <Redirect to="/signin" />} */}
         </Route>
       </Switch>
-
-      <Footer />
       {/* </CurrentUserContext.Provider> */}
     </>
   );
