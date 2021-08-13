@@ -1,13 +1,8 @@
-// import './SearchForm.css';
 import React from 'react';
 import SearchForm from './searchForm/SearchForm';
 import MoviesCardList from './moviesCardList/MoviesCardList';
 
 function Movies(props) {
-    function onCardLike(card) {
-        console.log(card.id)
-    }
-
     return (
         <div className='movies'>
             <SearchForm />

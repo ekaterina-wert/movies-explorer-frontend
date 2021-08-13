@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams, useHistory, Route, Switch } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer.js';
-// import Main from './main/Main.js';
+import Main from './main/Main.js';
 import Profile from './auth/profile/Profile';
 import Login from './auth/Login';
 import Register from './auth/Register';
@@ -123,11 +123,13 @@ function App() {
       {/* <CurrentUserContext.Provider value={currentUser}> */}
       <Switch>
         {/* <ProtectedRoute */}
-        {/* <Route
+        <Route
           exact path="/"
-          // loggedIn={loggedIn}
-          component={Main}
-        />
+        // loggedIn={loggedIn}
+        // component={Main}
+        >
+          <Main />
+        </Route>
         {/* <ProtectedRoute */}
         <Route
           path="/movies"
