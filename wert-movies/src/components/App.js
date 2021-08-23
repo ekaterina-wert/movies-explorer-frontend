@@ -129,6 +129,7 @@ function App() {
         // component={Main}
         >
           <Main />
+          <Footer />
         </Route>
         {/* <ProtectedRoute */}
         <Route
