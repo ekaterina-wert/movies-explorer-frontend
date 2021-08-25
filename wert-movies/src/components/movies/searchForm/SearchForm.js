@@ -1,12 +1,10 @@
 import './SearchForm.css';
 import React from 'react';
-import findIcon from '../../../images/find-icon.svg';
 
 function SearchForm(props) {
     const [search, setSearch] = React.useState({
         search: '',
     });
-
 
     function handleChangeData(e) {
         const { name, value } = e.target;
@@ -25,7 +23,7 @@ function SearchForm(props) {
                         type="text"
                         className="searchForm__text searchForm__text_type_input"
                         name="search"
-                        // value={userData.email}
+                        value={search.search}
                         onChange={handleChangeData}
                         placeholder='Фильм'
                         required
@@ -46,7 +44,6 @@ function SearchForm(props) {
                         <span className='searchForm__slider'></span>
                         <span className="searchForm__text searchForm__text_type_title">Короткометражки</span>
                     </label>
-                    {/* <span className="searchForm__text">Короткометражки</span> */}
                 </fieldset>
 
             </form>

@@ -1,16 +1,16 @@
 import './App.css';
 import React from 'react';
-import { useParams, useHistory, Route, Switch } from 'react-router-dom';
+import { useHistory, Route, Switch } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer.js';
 import Main from './main/Main.js';
 import Profile from './auth/profile/Profile';
 import Login from './auth/Login';
 import Register from './auth/Register';
-// import Profile from './auth/profile/Profile.js';
 import Movies from './movies/Movies.js';
 import SavedMovies from './movies/SavedMovies.js';
 import NotFound from './notFound/NotFound';
+// import Preloader from './preloader/Preloader';
 
 function App() {
   const cardArr = [
@@ -189,7 +189,7 @@ function App() {
           // onLogin={handleLogin} data={newUserData} 
           />
         </Route>
-        <Route path="/404">
+        <Route path="*">
           <NotFound
             onBack={handleBack}
           />

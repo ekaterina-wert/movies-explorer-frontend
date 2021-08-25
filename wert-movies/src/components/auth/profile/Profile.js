@@ -85,7 +85,7 @@ function Profile(props) {
                     >
                         Редактировать
                     </button>
-                    <Link to='/signout' className="profile__text profile__text_type_signout">Выйти из аккаунта</Link>
+                    <Link to='/signin' className="profile__text profile__text_type_signout">Выйти из аккаунта</Link>
                 </div>
             }
         </div >
