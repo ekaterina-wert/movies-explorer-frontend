@@ -1,39 +1,33 @@
 import './AboutMe.css';
 import React from 'react';
+import myPhoto from '../../../images/student.jpeg';
 
 function AboutMe() {
     return (
         <div className='student' id='student'>
             <h2 className='student__title'>Студент</h2>
-            <div>
-                <img src="../../../images/student.jpeg" alt='Ekaterina L.' />
-                <div>
-                    <h3 className='student__name'>Екатерина</h3>
-                    <p className="techs__text techs__text_title">Фронтенд-разработчик</p>
-                    <p>Интересуюсь наукой и технологиями. Люблю учиться, пробовать новое и исследовать свои границы (на текущий момент не обнаружены).
-
-                        Из любопытства начала самостоятельно изучать программирование на JavaScript и осознала, что, наконец, нашла инструмент для самовыражения и реализации своих творческих идей. Решила серьезно погрузиться в тему программирования с Яндекс.Практикумом. Теперь кайфую от создания, организации и написания аккуратного кода.
-
-                        В свободное время люблю решать задачи на codeWars, занимаюсь спортом и слушаю подкасты от студии Либо/Либо, АйТиБорода, Мы обречены, Трёп Себранта, Фронтенд Юность. Вдохновляюсь интервью с разработчиками, которые много работали, многого достигли и сейчас полны идей о том, как можно улучшить наш мир.
-                        В ближайшем будущем планирую пополнить их ряды.
-
-                        Для достижения этой цели стремлюсь развиваться в опытной команде, экспериментировать под присмотром увлеченных специалистов, внедрять современные знания при разработке крупных и полезных проектов. Хочу видеть результаты своей кропотливой работы в виде продуманного, быстрого и дружелюбного интерфейса.
-                    </p>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                    </ul>
+            <div className='student__container'>
+                <img className='student__photo' src={myPhoto} alt='Ekaterina L.' />
+                <div className='student__about-container'>
+                    <h3 className='student__name'>
+                        Екатерина
+                        <span className='student__job'>Фронтенд-разработчик</span>
+                    </h3>
+                    <p className='student__about'>Интересуюсь наукой и технологиями. Люблю учиться, пробовать новое и исследовать свои границы (на&#160;текущий момент не обнаружены).</p>
+                    <p className='student__about'>Из любопытства начала самостоятельно изучать программирование на JavaScript и осознала, что, наконец, нашла инструмент для самовыражения и реализации своих творческих идей. Решила серьезно погрузиться в тему программирования с Яндекс.Практикумом. Теперь кайфую от создания, организации и написания аккуратного кода.</p>
+                    <div className='student__links'>
+                        <a className='student__link' href='https://github.com/ekaterina-wert' target="_blank" rel="noreferrer">Github</a>
+                        <a className='student__link' href='https://linkedin.com'  target="_blank" rel="noreferrer">LinkedIn</a>
+                    </div>
                 </div>
             </div>
-            <ul className='techs__skills-container'>
-                <li className='techs__skill'>HTML</li>
-                <li className='techs__skill'>CSS</li>
-                <li className="techs__skill">JS</li>
-                <li className="techs__skill">React</li>
-                <li className='techs__skill'>Git</li>
-                <li className="techs__skill">Express.js</li>
-                <li className="techs__skill">mongoDB</li>
-            </ul>
+            <h3 className='student__projects'>Портфолио</h3>
+            <nav className='student__projects-container'>
+                <a className='student__project' href='https://github.com/ekaterina-wert/how-to-learn' target="_blank" rel="noreferrer">Статичный сайт</a>
+                <a className='student__project' href='https://ekaterina-wert.github.io/russian-travel/index.html' target="_blank" rel="noreferrer">Адаптивный сайт</a>
+                <a className="student__project" href='https://ekaterina-wert.github.io/react-mesto-auth' target="_blank" rel="noreferrer">Одностраничное приложение</a>
+                <a className="student__project" href='https://ekaterina-wert.github.io/battleship/index' target="_blank" rel="noreferrer">Игра "Морской Бой"</a>
+            </nav>
         </div>
     )
 };
