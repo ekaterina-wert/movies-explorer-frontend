@@ -35,7 +35,7 @@ function MoviesCard(props) {
     // Передаем id карточки в App через Main
     function handleClick() {
         console.log('click!')
-    //    props.onCardClick(props);
+        //    props.onCardClick(props);
     }
 
     // Передаем id карточки в App через Movies
@@ -50,10 +50,10 @@ function MoviesCard(props) {
 
     return (
         <li className="card">
-            <img className="card__image" src={imag} alt={props.nameRU} onClick={handleClick}/>
+            <img className="card__image" src={`https://api.nomoreparties.co${props.image.url}`} alt={props.nameRU} onClick={handleClick} />
             <div className="card__title-container">
                 <h2 className="card__title" onClick={handleClick} >{props.nameRU}</h2>
-                <button className={cardButtonClassName} type="button" aria-label="Сохранить" onClick={ props.isSaved ? handleDeleteClick : handleLikeClick} />
+                <button className={cardButtonClassName} type="button" aria-label="Сохранить" onClick={props.isSaved ? handleDeleteClick : handleLikeClick} />
             </div>
             <p className="card__duration-text">{timeConverter(props.duration)}</p>
         </li>
@@ -61,3 +61,44 @@ function MoviesCard(props) {
 }
 
 export default MoviesCard;
+
+// "image": { 
+//     "id": 1, 
+//     "name": "stones-in-exile", 
+//     "alternativeText": "", 
+//     "caption": "", 
+//     "width": 512, 
+//     "height": 279, 
+//     "formats": { 
+//         "thumbnail": { 
+//             "hash": "thumbnail_stones_in_exile_b2f1b8f4b7", 
+//             "ext": ".jpeg", 
+//             "mime": "image/jpeg", 
+//             "width": 245, 
+//             "height": 134, 
+//             "size": 8.79, 
+//             "path": null, 
+//             "url": "/uploads/thumbnail_stones_in_exile_b2f1b8f4b7.jpeg" 
+//         }, 
+//         "small": { 
+//             "hash": "small_stones_in_exile_b2f1b8f4b7", 
+//             "ext": ".jpeg", 
+//             "mime": "image/jpeg", 
+//             "width": 500, 
+//             "height": 272, 
+//             "size": 25.68, 
+//             "path": null, 
+//             "url": "/uploads/small_stones_in_exile_b2f1b8f4b7.jpeg" 
+//         } 
+//     }, 
+//     "hash": "stones_in_exile_b2f1b8f4b7", 
+//     "ext": ".jpeg", 
+//     "mime": "image/jpeg", 
+//     "size": 25.53, 
+//     "url": "/uploads/stones_in_exile_b2f1b8f4b7.jpeg", 
+//     "previewUrl": null, 
+//     "provider": "local", 
+//     "provider_metadata": null, 
+//     "created_at": "2020-11-23T14:11:57.313Z", 
+//     "updated_at": "2020-11-23T14:11:57.313Z" 
+// }
