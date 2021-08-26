@@ -61,6 +61,12 @@
   border-bottom: 1px solid #e8e8e8;
 }
 
+.auth__text:focus {
+  outline: none;
+  border-bottom: 1px solid #2be080;;
+  box-sizing: border-box;
+}
+
 .auth__input-error {
   font-weight: 400;
   font-size: 10px;
