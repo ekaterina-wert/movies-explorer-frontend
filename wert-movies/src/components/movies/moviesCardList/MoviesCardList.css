@@ -13,6 +13,16 @@
   grid-auto-rows: 281px;
 }
 
+.card-list__text {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.21;
+  color: #000;
+  width: 100%;
+  text-align: center;
+  margin: 60px auto;
+}
+
 .card-list__button {
   margin: 61px auto 89px;
   padding: 0;

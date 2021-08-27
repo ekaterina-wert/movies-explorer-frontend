@@ -5,11 +5,12 @@ import MoviesCardList from './moviesCardList/MoviesCardList';
 function Movies(props) {
     return (
         <div className='movies'>
-            <SearchForm />
+            <SearchForm
+                onSearch={props.onSearch} />
             <MoviesCardList
                 cards={props.cardArr}
-                onCardLike={props.onCardLike} 
-                savedMovies={props.savedMovies} 
+                onCardLike={props.onCardLike}
+                savedMovies={props.savedMovies}
                 isSaved={props.isSaved} />
         </div>
     )

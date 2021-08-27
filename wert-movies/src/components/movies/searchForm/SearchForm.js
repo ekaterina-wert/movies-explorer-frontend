@@ -2,16 +2,20 @@ import './SearchForm.css';
 import React from 'react';
 
 function SearchForm(props) {
-    const [search, setSearch] = React.useState({
-        search: '',
+    const [searchData, setSearchData] = React.useState({
+        keyword: '',
     });
 
     function handleChangeData(e) {
         const { name, value } = e.target;
 
-        setSearch({
+        setSearchData({
             [name]: value
         })
+    }
+
+    function handleSearch() {
+        props.onSearch(searchData)
     }
 
     return (
@@ -22,13 +26,13 @@ function SearchForm(props) {
                     <input
                         type="text"
                         className="searchForm__text searchForm__text_type_input"
-                        name="search"
-                        value={search.search}
+                        name="keyword"
+                        value={searchData.keyword}
                         onChange={handleChangeData}
                         placeholder='Фильм'
                         required
                     />
-                    <button className='searchForm__submit'></button>
+                    <button className='searchForm__submit' onClick={handleSearch} />
                     </div>
 
                     <label className="searchForm__switch">
