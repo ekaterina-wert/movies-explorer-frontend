@@ -1,0 +1,251 @@
+.student {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0 auto;
+  padding: 0 70px;
+}
+
+.student__title {
+  color: #000;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.21;
+  text-align: left;
+  margin: 110px 0 0;
+  padding-bottom: 23px;
+  border-bottom: solid black 1px;
+  width: 100%;
+}
+
+.student__container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 66px auto;
+}
+
+.student__photo {
+  display: block;
+  width: 270px;
+  height: 327px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+  margin-left: 120px;
+}
+
+.student__about-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.student__name {
+  color: #000;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.16;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+.student__job {
+  display: block;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  margin: 18px 0;
+}
+
+.student__about {
+  display: block;
+  margin: 8px 0 0;
+  color: #000;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.57;
+  text-align: left;
+}
+
+.student__links {
+  margin-top: 54px;
+}
+
+.student__link {
+  margin: 0 20px 0 0;
+  color: #000;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: left;
+  text-decoration: none;
+  transition: opacity 0.4s ease;
+}
+
+.student__link:hover {
+  opacity: 0.7;
+}
+
+.student__projects {
+  color: #a0a0a0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.11;
+  text-align: left;
+  margin: 34px 0 10px;
+}
+
+.student__projects-container {
+  margin: 0 0 106px;
+  width: 100%;
+}
+
+.student__project {
+  color: #000;
+  display: block;
+  background-image: url('../../../images/link-icon.svg');
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: 29px;
+  width: 100%;
+  padding: 20px 0 19px;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.67;
+  text-align: left;
+  text-decoration: none;
+  margin: 0;
+  border-bottom: 1px solid #e8e8e8;
+  transition: opacity 0.4s ease;
+}
+
+.student__project:last-of-type {
+  border-bottom: none;
+}
+
+.student__project:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 830px) {
+  .student {
+    padding: 0 50px;
+  }
+
+  .student__title {
+    margin-top: 90px;
+  }
+
+  .student__photo {
+    width: 255px;
+    height: 307px;
+    margin-left: 49px;
+  }
+
+  .student__name {
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .student__job {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 16px 0;
+  }
+
+  .student__about {
+    margin: 4px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .student__links {
+    margin-top: 27px;
+  }
+
+  .student__projects {
+    margin-top: 25px;
+  }
+
+  .student__projects-container {
+    margin-bottom: 71px;
+  }
+
+  .student__project {
+    background-size: 27px;
+    font-size: 28px;
+    line-height: 1.79;
+    border-bottom: 1px solid #e6e6e6;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .student {
+    padding: 0 14px;
+  }
+
+  .student__title {
+    margin-top: 70px;
+    font-size: 18px;
+    padding-bottom: 28px;
+  }
+
+  .student__container {
+    flex-direction: column;
+    align-items: center;
+    margin: 60px auto;
+  }
+
+  .student__photo {
+    width: 292px;
+    height: 352px;
+    margin: 0 auto;
+  }
+
+  .student__name {
+    font-size: 30px;
+    line-height: 1.21;
+    margin-top: 40px;
+  }
+
+  .student__job {
+    font-size: 11px;
+    line-height: 1.45;
+    margin: 20px 0 18px;
+  }
+
+  .student__about {
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .student__links {
+    margin-top: 40px;
+  }
+
+  .student__link {
+    margin-right: 26px;
+  }
+
+  .student__projects {
+    font-size: 14px;
+    line-height: 1.43;
+    margin: 10px 0 20px;
+  }
+
+  .student__projects-container {
+    margin-bottom: 51px;
+  }
+
+  .student__project {
+    background-size: 18px;
+    font-size: 18px;
+    line-height: 1.56;
+  }
+}

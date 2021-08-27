@@ -1,0 +1,63 @@
+.card-list__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 364px);
+  grid-template-rows: repeat(auto-fit, 281px);
+  column-gap: 24px;
+  row-gap: 37px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 80px 70px 30px;
+  list-style: none;
+  grid-auto-columns: 364px;
+  grid-auto-rows: 281px;
+  justify-content: flex-start;
+}
+
+.card-list__button {
+  margin: 61px auto 89px;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  background: none;
+  cursor: pointer;
+  transition: opacity 0.4s ease;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.21;
+  text-align: center;
+  color: #000;
+}
+
+.card-list__button:hover {
+  opacity: .7;
+} 
+
+@media screen and (max-width: 900px) {
+  .card-list__container {
+    grid-template-columns: repeat(auto-fit, 339px);
+    grid-template-rows: repeat(auto-fit, 262px);
+    gap: 30px;
+    grid-auto-columns: 339px;
+    grid-auto-rows: 262px;
+    padding: 70px 30px 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .card-list__container {
+    padding: 40px 10px 26px;
+    grid-template-columns: repeat(auto-fit, 300px);
+    gap: 14px;
+    grid-auto-columns: 300px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card-list__container {
+    grid-template-rows: repeat(auto-fit, 237px);
+    grid-auto-rows: 237px;
+  }
+}

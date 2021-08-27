@@ -1,0 +1,111 @@
+.promo__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #5c5c5c;
+  padding: 18px 70px;
+}
+
+.promo__logo {
+  width: 38px;
+  height: 38px;
+}
+
+.promo__link {
+  text-decoration: none;
+  transition: opacity 0.4s ease;
+}
+
+.promo__link:hover {
+  opacity: 0.8;
+}
+
+.promo__link_type_signup {
+  color: #fff;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+}
+
+.promo__link_type_login {
+  padding: 8px 20px;
+  margin-left: 30px;
+  color: #000;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  background-color: #2be080;
+  border-radius: 3px;
+}
+
+.promo__title {
+  padding: 184px 10px 224px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.16;
+  text-align: center;
+  background-color: #5c5c5c;
+  background-image: url('../../../images/promo-background.svg');
+  background-position: center 82px;
+  background-repeat: no-repeat;
+  background-size: 320px;
+  margin: 0;
+}
+
+.promo__nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #F5F5F5;
+}
+
+.promo__nav-link {
+  color: #000;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.23;
+  transition: opacity 0.5s ease;
+  margin: 24px 20px;
+  text-decoration: none;
+  border-bottom: solid 1px #000;
+}
+
+.promo__nav-link:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 550px) {
+  .promo__nav-link {
+    font-size: 11px;
+    line-height: 1.45;
+    margin: 25px 12px;
+  }
+
+  .promo__title {
+    padding: 207px 0 246px;
+    font-size: 31px;
+    line-height: 1.26;
+    letter-spacing: -0.04em;
+    background-position: center 142px;
+    background-size: 248px;
+  }
+
+  .promo__header {
+    padding: 14px 18px;
+  }
+
+  .promo__link_type_signup {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+  
+  .promo__link_type_login {
+    padding: 5px 12px;
+    margin-left: 14px;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}

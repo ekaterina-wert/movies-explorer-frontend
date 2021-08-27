@@ -1,0 +1,18 @@
+@import "./vendor/normalize.css";
+@import "./vendor/fonts/InterWeb/inter.css";
+
+#root {
+  min-width: 260px;
+  max-width: 1280px;
+  margin: 0 auto;
+  background-color:#FFF;
+  ;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-fout-smothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
