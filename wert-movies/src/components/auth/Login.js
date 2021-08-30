@@ -3,7 +3,7 @@ import AuthForm from './auth-form/AuthForm';
 
 function Login(props) {
     function handleLogin(userData) {
-        console.log(userData)
+        props.onLogin(userData)
     }
 
     return (

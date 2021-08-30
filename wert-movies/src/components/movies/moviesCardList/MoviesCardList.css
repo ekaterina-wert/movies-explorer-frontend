@@ -15,12 +15,12 @@
 
 .card-list__text {
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.21;
   color: #000;
-  width: 100%;
   text-align: center;
   margin: 60px auto;
+  padding: 0 70px;
 }
 
 .card-list__button {
@@ -62,5 +62,11 @@
     gap: 14px;
     grid-auto-columns: 300px;
     grid-auto-rows: 237px;
+  }
+
+  .card-list__text {
+    font-size: 14px;
+    margin: 60px auto;
+    padding: 0 20px;
   }
 }

@@ -11,12 +11,74 @@ import Movies from './movies/Movies.js';
 import SavedMovies from './movies/SavedMovies.js';
 import NotFound from './notFound/NotFound';
 import { moviesApi } from '../utils/MoviesApi';
-import Preloader from './preloader/Preloader';
+import { mainApi } from '../utils/MainApi';
 
 function App() {
   //стейт-переменные для обновления данных карточки и пользователя
   const [movies, setMovies] = React.useState([]);
-  const [filteredMovies, setFilteredMovies] = React.useState([]);
+  const [filteredMovies, setFilteredMovies] = React.useState(null);
+  const [message, setMessage] = React.useState('');
+
+  //стейт-переменные для регистрации и логина
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState(null);
+  const [newUserData, setNewUserData] = React.useState({});
+
+
+
+  //Функции реализации регистрации и авторизации
+  function handleRegister(data) {
+    return mainApi.register(data)
+      .then(() => {
+        setNewUserData(data)
+        console.log('Успешная регистрация!')
+      })
+      .catch((err) => {
+        console.log('Ошибка при регистрации нового пользователя', err.message)
+      });
+
+  };
+
+  function handleLogin(data) {
+    return mainApi.login(data)
+      .then((res) => {
+        setLoggedIn(true);
+        setUserEmail(res.email);
+        console.log('Успешный логин!')
+      })
+      .then(() => {
+        history.push('/movies');
+        setNewUserData({});
+      })
+      .catch((err) => {
+        console.log('Ошибка при входе', err.message)
+      });
+  };
+
+  function tokenCheck() {
+    mainApi.checkToken()
+      .then((res) => {
+        setUserEmail(res.email);
+        setLoggedIn(true)
+      })
+      .catch((err) => {
+        console.log('Ошибка при сохранении данных нового пользователя', err.message)
+      });
+    // }
+  };
+
+  function handleLogout() {
+    mainApi.logout()
+      .then(() => {
+        setLoggedIn(false);
+        history.push('/login');
+      })
+  };
+
+  //проверка наличия токена в локальном хранилище при первой загрузке сайта
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
 
   //получение карточек фильмов с сервера
   React.useEffect(() => {
@@ -26,7 +88,8 @@ function App() {
         console.log(movies);
       })
       .catch((err) => {
-        console.log('Ошибка при загрузке карточек фильмов', err)
+        setMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
+        console.log('Ошибка при загрузке карточек фильмов.', err)
       });
   }, []);
 
@@ -38,15 +101,19 @@ function App() {
       if ([nameRU, nameEN, country, director, description, year].join('').toLowerCase().includes(keyword.toLowerCase())) {
         return movie;
       }
-    })
-    setFilteredMovies(filteredMoviesArr)
-  }
+    });
+    setFilteredMovies(filteredMoviesArr);
 
+    console.log(filteredMoviesArr.length)
+    if (filteredMoviesArr.length === 0) {
+      setMessage('Ничего не найдено')
+    }
+  }
 
   function handleSearch(searchData) {
-    getFilteredMovies(searchData.keyword)
+    getFilteredMovies(searchData.keyword);
   }
-  
+
   const [savedMoviesArr, setSavedMoviesArr] = React.useState([{
     "id": 3,
     "nameRU": " Без обратного пути",
@@ -117,6 +184,7 @@ function App() {
             onCardLike={handleCardLike}
             savedMovies={savedMoviesArr}
             onSearch={handleSearch}
+            message={message}
           />
           <Footer />
         </Route>
@@ -150,17 +218,12 @@ function App() {
         </Route>
         <Route path="/signup">
           <Register
-          // onRegister={handleRegister} 
+          onRegister={handleRegister} 
           />
         </Route>
         <Route path="/signin">
           <Login
-          // onLogin={handleLogin} data={newUserData} 
-          />
-        </Route>
-        <Route path="/signin">
-          <Login
-          // onLogin={handleLogin} data={newUserData} 
+          onLogin={handleLogin} data={newUserData} 
           />
         </Route>
         <Route path="*">

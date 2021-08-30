@@ -14,9 +14,11 @@ function Register(props) {
         })
     }
 
-        function handleRegister(userData){
-          console.log(userName, userData)
-       }
+    function handleRegister(userData) {
+        const fullData = {...userData, ...userName}
+        console.log(fullData)
+        props.onRegister(fullData)
+    }
 
     return (
         <AuthForm
