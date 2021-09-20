@@ -1,12 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Profile.css';
+import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
 
 function Profile(props) {
+    const currentUser = React.useContext(CurrentUserContext);
+
     const [userData, setUserData] = React.useState({
-        name: props.name,
-        email: props.email,
+        name: '',
+        email: '',
     });
+
+    // Реализация очистки полей формы при открытии
+    React.useEffect(() => {
+        // Проверяем, чтоб данные пользователя не были undefined, иначе ругается консоль
+        (currentUser.name !== undefined && currentUser.email !== undefined) && setUserData({name: currentUser.name, email: currentUser.email});
+        // currentUser.email !== undefined && setUserData(currentUser.email);
+    }, [currentUser, props.isOpen]);
 
     // Определяем режим редактирования профиля
     const [isEdit, setIsEdit] = React.useState(false);
@@ -27,14 +37,13 @@ function Profile(props) {
     function handleSubmit(e) {
         e.preventDefault();
 
-        // props.onSubmit(userData)
-
+        props.onChangeUserInfo(userData)
         setIsEdit(false);
     }
 
     return (
         <div className="profile">
-            <p className="profile__title">Привет, {props.name}!</p>
+            <p className="profile__title">Привет, {currentUser.name}!</p>
             <form
                 id='edit-profile'
                 className="profile__form"
@@ -81,11 +90,10 @@ function Profile(props) {
                         type="button" id="edit-button"
                         aria-label="Редактировать профиль"
                         onClick={handleEditProfile}
-                    // onClick={props.onClick}
                     >
                         Редактировать
                     </button>
-                    <Link to='/signin' className="profile__text profile__text_type_signout">Выйти из аккаунта</Link>
+                    <Link to='/signin' onClick={props.onLogout} className="profile__text profile__text_type_signout">Выйти из аккаунта</Link>
                 </div>
             }
         </div >

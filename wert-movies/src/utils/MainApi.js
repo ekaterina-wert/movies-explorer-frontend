@@ -52,6 +52,60 @@ class MainApi {
         })
             .then(res => this._checkApiRespond(res))
     }
+
+    //получить данные пользователя (GET)
+    getUserData() {
+        return fetch(`${this._baseUrl}/users/me`, {
+            method: 'GET',
+            headers: this._headers,
+            credentials: "include",
+        })
+            .then(res => this._checkApiRespond(res))
+    }
+
+    //изменить данные пользователя (PATCH)
+    editUserData(data) {
+        return fetch(`${this._baseUrl}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: data.name,
+                email: data.email
+            }),
+            credentials: 'include',
+        })
+            .then(res => this._checkApiRespond(res))
+    }
+
+
+    getSavedMovies() {
+        return fetch(`${this._baseUrl}/movies`, {
+            headers: this._headers,
+            credentials: "include",
+        })
+            .then(res => this._checkApiRespond(res))
+    };
+
+    // Добавить фильм в избранное
+    saveMovie(cardInfo) {
+        return fetch(`${this._baseUrl}/movies`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({ ...cardInfo }),
+            credentials: 'include',
+        })
+            .then(res => this._checkApiRespond(res))
+    };
+
+    // Удалить фильм из избранное
+    removeSavedMovie(cardId) {
+        return fetch(`${this._baseUrl}/movies/${cardId}`, {
+            method: 'DELETE',
+            headers: this._headers,
+            credentials: 'include',
+        })
+            .then(res => this._checkApiRespond(res))
+    };
 }
 
 export const mainApi = new MainApi(MAIN_URL);

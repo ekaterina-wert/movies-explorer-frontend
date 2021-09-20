@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { useHistory, Route, Switch } from 'react-router-dom';
+import { useHistory, Route, Switch, Redirect } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer.js';
 import Main from './main/Main.js';
@@ -12,6 +12,7 @@ import SavedMovies from './movies/SavedMovies.js';
 import NotFound from './notFound/NotFound';
 import { moviesApi } from '../utils/MoviesApi';
 import { mainApi } from '../utils/MainApi';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
 function App() {
   //стейт-переменные для обновления данных карточки и пользователя
@@ -21,17 +22,36 @@ function App() {
 
   //стейт-переменные для регистрации и логина
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [userEmail, setUserEmail] = React.useState(null);
   const [newUserData, setNewUserData] = React.useState({});
 
+  const [currentUser, setCurrentUser] = React.useState({});
 
+  const [savedMovies, setSavedMovies] = React.useState([])
+
+  //получение данных пользователя с сервера
+  React.useEffect(() => {
+    if (loggedIn) {
+      mainApi.getUserData()
+        .then((userData) => {
+          setCurrentUser(userData.user);
+          console.log(userData.user)
+        })
+        .catch((err) => {
+          console.log('Ошибка при загрузке юзердата', err)
+        });
+    }
+  }, [loggedIn]);
 
   //Функции реализации регистрации и авторизации
   function handleRegister(data) {
     return mainApi.register(data)
       .then(() => {
-        setNewUserData(data)
-        console.log('Успешная регистрация!')
+        setNewUserData(data);
+        setLoggedIn(true)
+        console.log('Успешная регистрация!', data)
+      })
+      .then(() => {
+        history.push('/movies')
       })
       .catch((err) => {
         console.log('Ошибка при регистрации нового пользователя', err.message)
@@ -43,12 +63,10 @@ function App() {
     return mainApi.login(data)
       .then((res) => {
         setLoggedIn(true);
-        setUserEmail(res.email);
-        console.log('Успешный логин!')
+        setCurrentUser(res);
       })
       .then(() => {
         history.push('/movies');
-        setNewUserData({});
       })
       .catch((err) => {
         console.log('Ошибка при входе', err.message)
@@ -58,20 +76,19 @@ function App() {
   function tokenCheck() {
     mainApi.checkToken()
       .then((res) => {
-        setUserEmail(res.email);
-        setLoggedIn(true)
+        setLoggedIn(true);
+        setCurrentUser(res)
       })
       .catch((err) => {
         console.log('Ошибка при сохранении данных нового пользователя', err.message)
       });
-    // }
   };
 
   function handleLogout() {
     mainApi.logout()
       .then(() => {
         setLoggedIn(false);
-        history.push('/login');
+        history.push('/signin');
       })
   };
 
@@ -93,6 +110,20 @@ function App() {
       });
   }, []);
 
+  //получение сохраненных фильмов с сервера
+  React.useEffect(() => {
+    mainApi.getSavedMovies()
+      .then((allSavedMovies) => {
+        let userSavedMovies = allSavedMovies.filter(movie => {
+          return movie.owner === currentUser._id
+        })
+        setSavedMovies(userSavedMovies);
+      })
+      .catch((err) => {
+        setMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
+        console.log('Ошибка при загрузке карточек фильмов.', err)
+      });
+  }, [currentUser]);
 
   function getFilteredMovies(keyword) {
     const filteredMoviesArr = movies.filter((movie) => {
@@ -114,20 +145,16 @@ function App() {
     getFilteredMovies(searchData.keyword);
   }
 
-  const [savedMoviesArr, setSavedMoviesArr] = React.useState([{
-    "id": 3,
-    "nameRU": " Без обратного пути",
-    "nameEN": "No Distance Left to Run",
-    "director": "Уилл Лавлейс, Дилан Сотерн",
-    "country": "Великобритания",
-    "year": "2010",
-    "duration": 104,
-    "description": "Затеянный по такому подозрительному поводу, как реюнион Blur в 2009-м году фильм начисто лишен присущего моменту пафоса и выхолощенности речей. Вернее, что-то похожее неизбежно возникает, когда ты видишь, как забитый до отказа Гайд-парк как в последний раз ревет «Song 2», но это лишь буквальное свидетельство того, что Blur — великая группа. К счастью, помимо прямых и косвенных свидетельств этого, в «No Distance Left to Run» хватает острых углов, неловких моментов и всего того сора, из которого рождаются по-настоящему отличные группы: помимо важных, но общеизвестных моментов (вроде соперничества с Oasis за первенство в том же бритпопе) визуализируются и те, что всегда оставались за кадром: наркотическая зависимость, неутихающие костры амбиций, ревность, обиды, слава — и все это блестяще снято на фоне истории того, что вообще происходило в Британии времен Блэра.",
-    "trailerLink": "https://www.youtube.com/watch?v=6iYxdghpJZY",
-    "created_at": "2020-11-23T14:17:23.257Z",
-    "updated_at": "2020-11-23T14:17:23.257Z",
-    "image": { "id": 3, "name": "blur", "alternativeText": "", "caption": "", "width": 460, "height": 298, "formats": { "thumbnail": { "hash": "thumbnail_blur_a43fcf463d", "ext": ".jpeg", "mime": "image/jpeg", "width": 241, "height": 156, "size": 8.32, "path": null, "url": "/uploads/thumbnail_blur_a43fcf463d.jpeg" } }, "hash": "blur_a43fcf463d", "ext": ".jpeg", "mime": "image/jpeg", "size": 21.07, "url": "/uploads/blur_a43fcf463d.jpeg", "previewUrl": null, "provider": "local", "provider_metadata": null, "created_at": "2020-11-23T14:17:01.702Z", "updated_at": "2020-11-23T14:17:01.702Z" }
-  }])
+  function handleChangeUserInfo(userInputs) {
+    mainApi.editUserData(userInputs)
+      .then((userData) => {
+        setCurrentUser(userData.user);
+      })
+      .catch((err) => {
+        console.log("Ошибка при обновлении юзердата", err)
+      });
+  }
+
 
   const history = useHistory();
 
@@ -137,105 +164,130 @@ function App() {
 
   function handleCardLike(card) {
     // Проверяем, есть ли уже лайк на этой карточке
-    // const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-    // // Отправляем запрос в API и получаем обновлённые данные карточки
-    // api.changeLikeCardStatus(card._id, isLiked)
-    //   .then((newCard) => {
-    //     setCards((cards) =>
-    //       cards.map((c) =>
-    //         c._id === card._id ? newCard : c
-    //       )
-    //     )
-    //   })
-
-
-    setSavedMoviesArr(savedMoviesArr.some(function (el) { return el.id === card.id }) ? [...savedMoviesArr] : [card, ...savedMoviesArr]);
-    console.log(savedMoviesArr)
+    const [isSaved] = savedMovies.filter((savedMovie) => {
+      return savedMovie.movieId === card.id;
+    })
+    if (isSaved) {
+      debugger
+      mainApi.removeSavedMovie(isSaved._id)
+      .then(() => {
+        savedMovies.splice((savedMovies.indexOf(isSaved)), 1)
+        setSavedMovies(savedMovies);
+      })
+    } else {
+      debugger
+      // Отправляем запрос в API и получаем обновлённые данные карточки
+      mainApi.saveMovie({
+        country: card.country,
+        director: card.director,
+        duration: card.duration,
+        year: card.year,
+        description: card.description,
+        nameRU: card.nameRU,
+        nameEN: card.nameEN,
+        image: `https://api.nomoreparties.co${card.image.url}`,
+        movieId: card.id,
+        trailer: card.trailerLink,
+        thumbnail: `https://api.nomoreparties.co${card.image.formats.thumbnail.url}`
+      })
+        .then((newCard) => {
+          setSavedMovies([...savedMovies, newCard]);
+        })
+    }
   };
 
   function handleCardDelete(card) {
-    setSavedMoviesArr(savedMoviesArr.filter(function (el) { return el.id !== card.id }));
+    mainApi.removeSavedMovie(card._id)
+      .then(() => {
+        setSavedMovies(savedMovies.filter(el => {
+          return (el._id !== card._id)
+        }))
+      })
+      .catch((err) => {
+        console.log("Ошибка при удалении фильма", err)
+      });
   }
 
   return (
     <>
-      {/* <CurrentUserContext.Provider value={currentUser}> */}
-      <Switch>
-        {/* <ProtectedRoute */}
-        <Route
-          exact path="/"
-        // loggedIn={loggedIn}
-        // component={Main}
-        >
-          <Main />
-          <Footer />
-        </Route>
-        {/* <ProtectedRoute */}
-        <Route
-          path="/movies"
-        // loggedIn={loggedIn}
-        // component={Movies}
-        >
-          <Header />
-          <Movies
-            isSaved={false}
-            cardArr={filteredMovies}
-            onCardLike={handleCardLike}
-            savedMovies={savedMoviesArr}
-            onSearch={handleSearch}
-            message={message}
-          />
-          <Footer />
-        </Route>
-        {/* <ProtectedRoute */}
-        <Route
-          path="/saved-movies"
-        // loggedIn={loggedIn}
-        // component={SavedMovies}
-        >
-          <Header />
-          <SavedMovies
-            isSaved={true}
-            savedCardArr={savedMoviesArr}
-            onCardDelete={handleCardDelete}
-          />
-          <Footer />
-        </Route>
-        {/* <ProtectedRoute */}
-        {/* <Route
+      <CurrentUserContext.Provider value={currentUser}>
+        <Switch>
+          {/* <ProtectedRoute */}
+          <Route
+            exact path="/"
+          // loggedIn={loggedIn}
+          // component={Main}
+          >
+            <Main />
+            <Footer />
+          </Route>
+          {/* <ProtectedRoute */}
+          <Route
+            path="/movies"
+          // loggedIn={loggedIn}
+          // component={Movies}
+          >
+            <Header />
+            <Movies
+              isSaved={false}
+              cardArr={filteredMovies}
+              onCardLike={handleCardLike}
+              savedMovies={savedMovies}
+              onSearch={handleSearch}
+              message={message}
+            />
+            <Footer />
+          </Route>
+          {/* <ProtectedRoute */}
+          <Route
+            path="/saved-movies"
+          // loggedIn={loggedIn}
+          // component={SavedMovies}
+          >
+            <Header />
+            <SavedMovies
+              isSaved={true}
+              savedCardArr={savedMovies}
+              onCardDelete={handleCardDelete}
+            />
+            <Footer />
+          </Route>
+          {/* <ProtectedRoute */}
+          {/* <Route
           path="/profile"
           // loggedIn={loggedIn}
           component={Profile}
         /> */}
-        <Route path="/profile">
-          <Header />
-          <Profile
-            // onRegister={handleRegister} 
-            name='Alex'
-            email='ru@ru.ru'
-          />
-        </Route>
-        <Route path="/signup">
-          <Register
-          onRegister={handleRegister} 
-          />
-        </Route>
-        <Route path="/signin">
-          <Login
-          onLogin={handleLogin} data={newUserData} 
-          />
-        </Route>
-        <Route path="*">
-          <NotFound
-            onBack={handleBack}
-          />
-        </Route>
-        <Route>
-          {/* {loggedIn ? <Redirect exact to="/" /> : <Redirect to="/signin" />} */}
-        </Route>
-      </Switch>
-      {/* </CurrentUserContext.Provider> */}
+          <Route path="/profile">
+            <Header />
+            <Profile
+              // onRegister={handleRegister} 
+              name={currentUser.name}
+              email={currentUser.email}
+              onLogout={handleLogout}
+              onChangeUserInfo={handleChangeUserInfo}
+            />
+          </Route>
+          <Route path="/signup">
+            <Register
+              onRegister={handleRegister}
+            />
+          </Route>
+          <Route path="/signin">
+            <Login
+              onLogin={handleLogin} data={newUserData}
+            />
+          </Route>
+          <Route path="*">
+            <NotFound
+              onBack={handleBack}
+            />
+          </Route>
+          <Route>
+            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/signin" />}
+          </Route>
+        </Switch>
+      </CurrentUserContext.Provider>
     </>
   );
 }
