@@ -16,24 +16,21 @@ function MoviesCard(props) {
     // const cardDeleteButtonClassName = isOwn? 'place__trash-button' : 'place__trash-button place__trash-button_hidden'; 
 
     let isLiked = false;
+    const [buttonClass, setButtonClass] = React.useState('');
 
     // Создаём переменную, которую после зададим в `className` для кнопки лайка/удаления
-    function getClassName() {
-        // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-
+    React.useEffect(() => {
         if (props.savedMovies) {
             isLiked = props.savedMovies.some(savedMovie => savedMovie.movieId === props.id)
         } else { isLiked = false };
 
         if (props.isSaved) {
-            return 'card__button card__button_type_delete'
+            setButtonClass('card__button card__button_type_delete')
         }
         else if (isLiked) {
-            return 'card__button card__button_type_active-like'
-        } else { return 'card__button card__button_type_like' };
-    }
-
-
+            setButtonClass('card__button card__button_type_active-like')
+        } else { setButtonClass('card__button card__button_type_like') };
+    }, [isLiked, props.savedMovies])
 
     // Передаем id карточки в App через Main
     function handleClick() {
@@ -56,7 +53,7 @@ function MoviesCard(props) {
             <img className="card__image" src={`${props.image}`.includes('https') ? props.image : `https://api.nomoreparties.co${props.image.url}`} alt={props.nameRU} onClick={handleClick} />
             <div className="card__title-container">
                 <h2 className="card__title" onClick={handleClick} >{props.nameRU}</h2>
-                <button className={getClassName()} type="button" aria-label="Сохранить" onClick={props.isSaved ? handleDeleteClick : handleLikeClick} />
+                <button className={buttonClass} type="button" aria-label="Сохранить" onClick={props.isSaved ? handleDeleteClick : handleLikeClick} />
             </div>
             <p className="card__duration-text">{timeConverter(props.duration)}</p>
         </li>

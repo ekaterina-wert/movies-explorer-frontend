@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Profile.css';
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext';
+import Header from '../../header/Header';
+import Footer from '../../footer/Footer';
 
 function Profile(props) {
     const currentUser = React.useContext(CurrentUserContext);
@@ -43,6 +45,7 @@ function Profile(props) {
 
     return (
         <div className="profile">
+            <Header />
             <p className="profile__title">Привет, {currentUser.name}!</p>
             <form
                 id='edit-profile'
@@ -96,6 +99,7 @@ function Profile(props) {
                     <Link to='/signin' onClick={props.onLogout} className="profile__text profile__text_type_signout">Выйти из аккаунта</Link>
                 </div>
             }
+            <Footer />
         </div >
     )
 }

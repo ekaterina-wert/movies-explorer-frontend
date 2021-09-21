@@ -7,7 +7,7 @@ function MoviesCardList(props) {
     const [isMovies, setIsMovies] = React.useState(null);
     const [showMore, setShowMore] = React.useState(false);
     const [cardNumber, setCardNumber] = React.useState(0)
-    // const [index, setIndex] = React.useState(0);
+
     let index = 0;
 
     function handleResize() {
@@ -22,17 +22,15 @@ function MoviesCardList(props) {
     }
 
     React.useEffect(() => {
-
         if (props.cards !== null) {
             if (props.cards.length !== 0) {
                 handleResize();
                 if (props.cards.length > index) {
                     setShowMore(true)
                 }
+                setIsMovies(true)
+                setCardNumber(index)
             }
-            setIsMovies(true)
-            setCardNumber(index)
-
         } else {
             setIsMovies(false)
         }
@@ -43,7 +41,6 @@ function MoviesCardList(props) {
     });
 
     function addCards() {
-        debugger
         if (window.innerWidth > 1090) {
             setCardNumber(cardNumber + 3);
         } else {

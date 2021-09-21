@@ -1,7 +1,8 @@
 import './App.css';
 import React from 'react';
 import { useHistory, Route, Switch, Redirect } from 'react-router-dom';
-import Header from './header/Header';
+import ProtectedRoute from './protectedRoute/ProtectedRoute';
+
 import Footer from './footer/Footer.js';
 import Main from './main/Main.js';
 import Profile from './auth/profile/Profile';
@@ -168,14 +169,13 @@ function App() {
       return savedMovie.movieId === card.id;
     })
     if (isSaved) {
-      debugger
       mainApi.removeSavedMovie(isSaved._id)
-      .then(() => {
-        savedMovies.splice((savedMovies.indexOf(isSaved)), 1)
-        setSavedMovies(savedMovies);
-      })
+        .then(() => {
+          setSavedMovies(savedMovies.splice((savedMovies.indexOf(isSaved)), 1))
+          setSavedMovies(savedMovies);
+
+        })
     } else {
-      debugger
       // Отправляем запрос в API и получаем обновлённые данные карточки
       mainApi.saveMovie({
         country: card.country,
@@ -212,77 +212,63 @@ function App() {
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
-          {/* <ProtectedRoute */}
+
           <Route
             exact path="/"
-          // loggedIn={loggedIn}
-          // component={Main}
           >
             <Main />
             <Footer />
           </Route>
-          {/* <ProtectedRoute */}
-          <Route
+
+          <ProtectedRoute
             path="/movies"
-          // loggedIn={loggedIn}
-          // component={Movies}
-          >
-            <Header />
-            <Movies
-              isSaved={false}
-              cardArr={filteredMovies}
-              onCardLike={handleCardLike}
-              savedMovies={savedMovies}
-              onSearch={handleSearch}
-              message={message}
-            />
-            <Footer />
-          </Route>
-          {/* <ProtectedRoute */}
-          <Route
+            loggedIn={loggedIn}
+            component={Movies}
+            isSaved={false}
+            cardArr={filteredMovies}
+            onCardLike={handleCardLike}
+            savedMovies={savedMovies}
+            onSearch={handleSearch}
+            message={message}
+          />
+
+          <ProtectedRoute
             path="/saved-movies"
-          // loggedIn={loggedIn}
-          // component={SavedMovies}
-          >
-            <Header />
-            <SavedMovies
-              isSaved={true}
-              savedCardArr={savedMovies}
-              onCardDelete={handleCardDelete}
-            />
-            <Footer />
-          </Route>
-          {/* <ProtectedRoute */}
-          {/* <Route
-          path="/profile"
-          // loggedIn={loggedIn}
-          component={Profile}
-        /> */}
-          <Route path="/profile">
-            <Header />
-            <Profile
-              // onRegister={handleRegister} 
-              name={currentUser.name}
-              email={currentUser.email}
-              onLogout={handleLogout}
-              onChangeUserInfo={handleChangeUserInfo}
-            />
-          </Route>
+            loggedIn={loggedIn}
+            component={SavedMovies}
+            isSaved={true}
+            savedCardArr={savedMovies}
+            onCardDelete={handleCardDelete}
+          />
+
+          <ProtectedRoute
+            path="/profile"
+            loggedIn={loggedIn}
+            component={Profile}
+            name={currentUser.name}
+            email={currentUser.email}
+            onLogout={handleLogout}
+            onChangeUserInfo={handleChangeUserInfo}
+          />
+
           <Route path="/signup">
             <Register
               onRegister={handleRegister}
             />
           </Route>
+
           <Route path="/signin">
             <Login
               onLogin={handleLogin} data={newUserData}
             />
           </Route>
+
           <Route path="*">
             <NotFound
               onBack={handleBack}
             />
           </Route>
+
           <Route>
             {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/signin" />}
           </Route>
