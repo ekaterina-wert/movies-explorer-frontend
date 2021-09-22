@@ -6,14 +6,16 @@ import Footer from '../footer/Footer';
 
 function SavedMovies(props) {
     return (
-        <div className='saved-movies'>
+        <>
             <Header />
-            <MoviesCardList
-                cards={props.savedCardArr}
-                onCardDelete={props.onCardDelete}
-                isSaved={props.isSaved} />
+            <div className='saved-movies'>
+                <MoviesCardList
+                    cards={props.savedCardArr}
+                    onCardDelete={props.onCardDelete}
+                    isSaved={props.isSaved} />
+            </div>
             <Footer />
-        </div>
+        </>
     )
 };
 

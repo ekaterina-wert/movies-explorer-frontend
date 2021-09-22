@@ -1,9 +1,18 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import './MoviesCard.css';
 import { timeConverter } from '../../../utils/utils';
 // import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 
 function MoviesCard(props) {
+
+    const history = useHistory();
+
+    const handleClick = () => {
+        debugger
+        let path = props.trailer;
+        history.push(path);
+    }
 
     // const [isLiked, setIsLiked] = React.useState(false)
 
@@ -33,10 +42,10 @@ function MoviesCard(props) {
     }, [isLiked, props.savedMovies])
 
     // Передаем id карточки в App через Main
-    function handleClick() {
-        console.log('click!')
-        //    props.onCardClick(props);
-    }
+    // function handleClick() {
+    //     console.log('click!')
+    //     //    props.onCardClick(props);
+    // }
 
     // Передаем id карточки в App через Movies
     function handleLikeClick() {
@@ -50,12 +59,15 @@ function MoviesCard(props) {
 
     return (
         <li className="card">
-            <img className="card__image" src={`${props.image}`.includes('https') ? props.image : `https://api.nomoreparties.co${props.image.url}`} alt={props.nameRU} onClick={handleClick} />
+            <a className="card__link" href={props.trailer ? props.trailer : props.trailerLink} target="_blank" rel="noreferrer" title={props.description}>
+                <img className="card__image" src={`${props.image}`.includes('https') ? props.image : `https://api.nomoreparties.co${props.image.url}`} alt={props.nameRU} />
+            </a>
             <div className="card__title-container">
-                <h2 className="card__title" onClick={handleClick} >{props.nameRU}</h2>
+                <h2 className="card__title">{props.nameRU}</h2>
                 <button className={buttonClass} type="button" aria-label="Сохранить" onClick={props.isSaved ? handleDeleteClick : handleLikeClick} />
             </div>
             <p className="card__duration-text">{timeConverter(props.duration)}</p>
+
         </li>
     )
 }

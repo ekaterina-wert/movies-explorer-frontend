@@ -80,6 +80,9 @@ function App() {
         setLoggedIn(true);
         setCurrentUser(res)
       })
+      .then(() => {
+        history.push('/movies')
+      })
       .catch((err) => {
         console.log('Ошибка при сохранении данных нового пользователя', err.message)
       });
